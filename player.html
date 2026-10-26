@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player - Pocket Class</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-[#0F172A] min-h-screen selection:bg-indigo-500 selection:text-white">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 p-8 flex justify-between items-center bg-gradient-to-b from-slate-950/80 to-transparent z-50 backdrop-blur-sm">
+        <button onclick="window.location.href='dashboard.html'" class="group flex items-center bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-2xl font-bold text-sm transition-all border border-white/10 backdrop-blur-xl">
+            <svg class="w-5 h-5 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            Exit Library
+        </button>
+
+        <div class="text-center hidden md:block">
+            <h2 id="videoTitle" class="text-white font-black text-xl tracking-tight">Lecture Title</h2>
+            <p class="text-indigo-400 text-[10px] font-black uppercase tracking-[0.3em] mt-1">Smart Board Recording</p>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
+            <span class="text-emerald-400 text-[10px] font-black uppercase tracking-widest">Streaming HD</span>
+        </div>
+    </header>
+
+    <main class="flex flex-col items-center justify-center min-h-screen p-6 md:p-12">
+        <div class="w-full max-w-6xl relative group">
+            <!-- Decorative shadow -->
+            <div class="absolute inset-0 bg-indigo-600/20 rounded-[3rem] blur-3xl opacity-50 group-hover:opacity-100 transition-opacity duration-700"></div>
+
+            <div class="relative bg-black rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/5 aspect-video">
+                <video id="mainPlayer" class="w-full h-full object-contain" controls autoplay>
+                    <source src="" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
+            <!-- Footer Stats -->
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-4xl mx-auto">
+                <div class="bg-white/5 border border-white/5 p-6 rounded-3xl backdrop-blur-md">
+                    <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Subject</p>
+                    <p id="statSubject" class="text-white font-bold">---</p>
+                </div>
+                <div class="bg-white/5 border border-white/5 p-6 rounded-3xl backdrop-blur-md text-center">
+                    <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Platform</p>
+                    <p class="text-indigo-400 font-bold">Cloudinary Edge</p>
+                </div>
+                <div class="bg-white/5 border border-white/5 p-6 rounded-3xl backdrop-blur-md text-right">
+                    <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Status</p>
+                    <p class="text-emerald-400 font-bold">Archived Securely</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const url = localStorage.getItem('current_video_url');
+        const subject = localStorage.getItem('current_video_subject');
+
+        if (!url) window.location.href = 'dashboard.html';
+
+        const player = document.getElementById('mainPlayer');
+        player.querySelector('source').src = url;
+        player.load();
+
+        document.getElementById('videoTitle').textContent = `${subject} Recording`;
+        document.getElementById('statSubject').textContent = subject;
+        document.title = `${subject} - Pocket Class`;
+    </script>
+</body>
+</html>

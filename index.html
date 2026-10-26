@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pocket Class - Student Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-indigo-600 flex items-center justify-center min-h-screen relative overflow-hidden">
+    <!-- Decorative background blobs -->
+    <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-indigo-500 rounded-full blur-3xl opacity-50"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-purple-500 rounded-full blur-3xl opacity-50"></div>
+
+    <div class="backdrop-blur-xl bg-white/90 p-10 rounded-[2.5rem] shadow-2xl w-full max-w-md border border-white/20 relative z-10 mx-4">
+        <div class="text-center mb-12">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-indigo-600 rounded-3xl shadow-xl shadow-indigo-200 mb-6 rotate-3 hover:rotate-0 transition-transform duration-500">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+            </div>
+            <h1 class="text-4xl font-black text-slate-900 mb-2 tracking-tight">Pocket Class</h1>
+            <p class="text-slate-500 font-medium">Empowering your learning journey</p>
+        </div>
+
+        <form id="loginForm" class="space-y-6">
+            <div class="space-y-2">
+                <label class="text-sm font-bold text-slate-700 ml-1">ROLL NUMBER</label>
+                <input type="text" id="rollNumber" placeholder="25UCA001"
+                    class="w-full px-5 py-4 rounded-2xl border-2 border-slate-100 focus:border-indigo-500 bg-slate-50/50 outline-none transition-all uppercase font-bold text-slate-800 placeholder:text-slate-300"
+                    required>
+            </div>
+            <div class="space-y-2">
+                <label class="text-sm font-bold text-slate-700 ml-1">PASSWORD</label>
+                <input type="password" id="password" placeholder="••••••••"
+                    class="w-full px-5 py-4 rounded-2xl border-2 border-slate-100 focus:border-indigo-500 bg-slate-50/50 outline-none transition-all font-bold text-slate-800 placeholder:text-slate-300"
+                    required>
+            </div>
+
+            <div id="errorMessage" class="text-red-600 text-sm text-center hidden font-bold bg-red-100 p-4 rounded-2xl border border-red-200">
+                Access Denied. Check credentials.
+            </div>
+
+            <button type="submit"
+                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-black py-5 rounded-2xl shadow-xl shadow-indigo-200 transition-all active:scale-[0.97] tracking-widest text-sm">
+                LOGIN TO PORTAL
+            </button>
+        </form>
+
+        <p class="text-center text-slate-400 text-[10px] mt-10 uppercase tracking-[0.2em] font-black">
+            Classroom Ecosystem • 2026
+        </p>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const roll = document.getElementById('rollNumber').value.trim().toUpperCase();
+            const pass = document.getElementById('password').value.trim().toUpperCase();
+            const error = document.getElementById('errorMessage');
+
+            // Validation Logic: 25UCA001 to 25UCA094
+            const regex = /^25UCA(\d{3})$/;
+            const match = roll.match(regex);
+
+            if (match) {
+                const num = parseInt(match[1]);
+                if (num >= 1 && num <= 94 && roll === pass) {
+                    localStorage.setItem('student_roll', roll);
+                    window.location.href = 'dashboard.html';
+                    return;
+                }
+            }
+            error.classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>
